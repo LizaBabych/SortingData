@@ -9,6 +9,7 @@ const App = () => {
   const [defaultData, setDefaultData] = useState([]);
   const [headers, setHeaders] = useState({});
   const [isLoading, setLoading] = useState(true);
+  const [inputValue, setInputValue] = useState("");
 
   const splitLocation = (personLocations) => {
     const data = [];
@@ -84,9 +85,23 @@ const App = () => {
     return "";
   };
 
+  const findSearchingValues = (data, searchingWord) => {
+    return data.filter((row) => {
+      return Object.values(row).some((s) =>
+        s.toString().toLowerCase().includes(searchingWord)
+      );
+    });
+  };
+
   return (
     <div className="App">
       <h1>People Locations</h1>
+      <input
+        type="text"
+        value={inputValue}
+        placeholder="Search"
+        onChange={(e) => setInputValue(e.target.value)}
+      />
       <table>
         <thead>
           <tr>
@@ -101,7 +116,7 @@ const App = () => {
         </thead>
         <tbody>
           {!isLoading &&
-            locations.map((data, dataIdx) => (
+            findSearchingValues(locations, inputValue).map((data, dataIdx) => (
               <tr key={dataIdx}>
                 {Object.values(data).map((val, valIdx) => (
                   <td key={valIdx}>{val}</td>
