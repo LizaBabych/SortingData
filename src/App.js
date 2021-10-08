@@ -33,12 +33,13 @@ const App = () => {
       setDefaultData(peopleLocation);
       setLocations(peopleLocation);
       let directions = {};
-      Object.keys(peopleLocation[0]).map((head) => {
-        directions = {
-          ...directions,
-          [head]: "default",
-        };
-      });
+      Object.keys(peopleLocation[0]).map(
+        (head) =>
+          (directions = {
+            ...directions,
+            [head]: "default",
+          })
+      );
       setHeaders(directions);
       setLoading(false);
     });
@@ -49,20 +50,16 @@ const App = () => {
     let directions = { ...headers };
     if (headers[value] === "default") {
       peopleLocation.sort((a, b) => {
-        const nameA = a[value];
-        const nameB = b[value];
-        if (nameA < nameB) return -1;
-        if (nameA > nameB) return 1;
+        if (a[value] < b[value]) return -1;
+        if (a[value] > b[value]) return 1;
         return a[value] - b[value];
       });
       directions[value] = "up";
     }
     if (headers[value] === "up") {
       peopleLocation.sort((a, b) => {
-        const nameA = a[value];
-        const nameB = b[value];
-        if (nameA > nameB) return -1;
-        if (nameA < nameB) return 1;
+        if (a[value] > b[value]) return -1;
+        if (a[value] < b[value]) return 1;
         return 0;
       });
       directions[value] = "down";
@@ -76,12 +73,8 @@ const App = () => {
   };
 
   const setIconClass = (direction) => {
-    if (direction === "up") {
-      return "-up";
-    }
-    if (direction === "down") {
-      return "-down";
-    }
+    if (direction === "up") return "-up";
+    if (direction === "down") return "-down";
     return "";
   };
 
